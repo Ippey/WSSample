@@ -5,6 +5,7 @@
 - composer
 - [bref](https://bref.sh/)
 - [Serverless Framework](https://www.serverless.com/)
+- [Symfony CLI](https://symfony.com/download)
 - AWS CLI
 - AWS系のもろもろの設定(鍵を仕込んだり)
 
@@ -25,6 +26,11 @@ serverless deploy
 - LambdaにDynamoDBのアクセス権を追加
 
 ## 動作確認
+```shell script
+symfony server:start -d
+symfony open:local
+```
+
 デプロイ後に、WebSocketのURLが出力されるので
 templates/default/index.html.twigの
 
