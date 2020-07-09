@@ -31,6 +31,7 @@ symfony server:start -d
 symfony open:local
 ```
 
+起動後、ブラウザで https://localhost:8000/default にアクセス。  
 デプロイ後に、WebSocketのURLが出力されるので
 templates/default/index.html.twigの
 
