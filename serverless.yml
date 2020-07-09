@@ -1,0 +1,55 @@
+service: ws-sample-symfony
+
+provider:
+  name: aws
+  region: ap-northeast-1
+  runtime: provided
+  websocketsApiName: ws-sample-symfony-api
+  websocketsApiRouteSelectionExpression: $request.body.action # custom routes are selected by the value of the action property in the body
+#  logs:
+#    websocket: true
+  environment:
+    # Symfony environment variables
+    APP_ENV: prod
+
+plugins:
+  - ./vendor/bref/bref
+
+package:
+  exclude:
+    - node_modules/**
+    - tests/**
+
+functions:
+  coonectHandler:
+    handler: connect.php
+    events:
+      - websocket: $connect
+    timeout: 120 # in seconds
+    layers:
+      - ${bref:layer.php-74} # PHP
+#  actionHandler:
+#    handler: application.php
+#    events:
+#      - websocket: actionRoute
+#    layers:
+#      - ${bref:layer.php-74} # PHP
+#      - ${bref:layer.console} # The "console" layer
+  disconnectHandler:
+    handler: connect.php
+    events:
+      - websocket: $disconnect
+    layers:
+      - ${bref:layer.php-74} # PHP
+  defaultHandler:
+    handler: application.php
+    events:
+      - websocket: $default
+    layers:
+      - ${bref:layer.php-74} # PHP
+  console:
+    handler: bin/console
+    timeout: 120 # in seconds
+    layers:
+      - ${bref:layer.php-74} # PHP
+      - ${bref:layer.console} # The "console" layer
